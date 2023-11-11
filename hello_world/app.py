@@ -1,6 +1,3 @@
-import json
-import traceback
-
 from jwt_token import create_token
 from repository import get_user
 

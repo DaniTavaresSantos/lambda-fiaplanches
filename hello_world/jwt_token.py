@@ -5,7 +5,7 @@ import os
 
 import jwt
 
-secret_key = "52d3f853c19f8b63c0918c126422aa2d99b1aef33ec63d41dea4fadf19406e54"
+secret_key = os.environ.get("SECRET_KEY").strip()
 
 
 def create_token(cpf: str) -> json:

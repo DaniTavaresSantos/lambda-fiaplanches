@@ -4,10 +4,10 @@ import os
 
 def get_user(cpf: str):
     connection = psycopg2.connect(
-        dbname="fiaplanches",
-        host="fiaplanches.cf5bq2g9b2j1.us-east-1.rds.amazonaws.com",
-        password="w44JZd3d4BYQiNDhNLg4",
-        user="fiap_lanches"
+        dbname=os.environ.get("FIAP_LANCHES_DB_NAME").strip(),
+        host=os.environ.get("FIAP_LANCHES_HOST").strip(),
+        password=os.environ.get("FIAP_LANCHES_PASSWORD").strip(),
+        user=os.environ.get("FIAP_LANCHES_USER").strip()
     )
 
     with connection as conn:
