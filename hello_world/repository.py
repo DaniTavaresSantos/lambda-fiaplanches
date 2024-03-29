@@ -1,26 +1,18 @@
-import psycopg2
+import pymongo
 import os
+
+uri = os.environ.get("MONGO_DB_STRING").strip()
 
 
 def get_user(cpf: str):
-    connection = psycopg2.connect(
-        dbname=os.environ.get("FIAP_LANCHES_DB_NAME").strip(),
-        host=os.environ.get("FIAP_LANCHES_HOST").strip(),
-        password=os.environ.get("FIAP_LANCHES_PASSWORD").strip(),
-        user=os.environ.get("FIAP_LANCHES_USER").strip()
-    )
 
-    with connection as conn:
-        with conn.cursor() as curs:
-            query = f"""
-                select 1 from cliente
-                where cpf = '{cpf}'
-            """
+    client = pymongo.MongoClient(uri)
+    db = client["fiap-lanches-client"]
+    collection = db["cliente"]
 
-            curs.execute(query)
-            record = curs.fetchone()
+    result = collection.find_one({"cpf": cpf})
 
-            if record is not None:
-                return record[0]
-            else:
-                return record
+    if result:
+        return True
+    else:
+        return False
